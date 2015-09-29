@@ -1,0 +1,25 @@
+apply plugin: "java"
+apply plugin: "eclipse"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.6'
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', includes: ['*.jar'])
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src"]
+        }
+    }
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}

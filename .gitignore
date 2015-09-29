@@ -1,0 +1,24 @@
+# Gradle
+build/
+.gradle
+
+# generated when `gradlew --gui` is called
+ui/
+gradle-app.setting
+
+# IntelliJ IDEA
+out/
+*.iws
+.idea/
+*.ipr
+*.iml
+
+# Eclipse
+.settings/
+.classpath
+.project
+bin/
+
+# do not include JabRef.jar
+lib/
+
