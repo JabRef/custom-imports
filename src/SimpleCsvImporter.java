@@ -1,11 +1,11 @@
-import net.sf.jabref.logic.id.*;
-import net.sf.jabref.importer.fileformat.*;
-import net.sf.jabref.importer.*;
-
-import java.lang.Override;
-import java.util.*;
 import java.io.*;
-import net.sf.jabref.model.entry.*;
+import java.util.*;
+
+import net.sf.jabref.importer.ImportFormatReader;
+import net.sf.jabref.importer.OutputPrinter;
+import net.sf.jabref.importer.fileformat.ImportFormat;
+import net.sf.jabref.model.entry.BibEntry;
+import net.sf.jabref.model.entry.BibtexEntryTypes;
 
 public class SimpleCsvImporter extends ImportFormat {
 
@@ -20,25 +20,23 @@ public class SimpleCsvImporter extends ImportFormat {
     }
 
     @Override
-    public List<BibtexEntry> importEntries(InputStream stream, OutputPrinter status) throws IOException {
-        List<BibtexEntry> bibitems = new ArrayList<BibtexEntry>();
-
+    public List<BibEntry> importEntries(InputStream stream, OutputPrinter printer) throws IOException {
+        List<BibEntry> bibitems = new ArrayList<>();
         BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
 
         String line = in.readLine();
         while (line != null) {
-            if (!"".equals(line.trim())) {
+            if (!line.trim().isEmpty()) {
                 String[] fields = line.split(";");
-                BibtexEntry be = new BibtexEntry(IdGenerator.next());
-                be.setType(BibtexEntryType.getType("techreport"));
+                BibEntry be = new BibEntry();
+                be.setType(BibtexEntryTypes.TECHREPORT);
                 be.setField("year", fields[0]);
                 be.setField("author", fields[1]);
                 be.setField("title", fields[2]);
                 bibitems.add(be);
                 line = in.readLine();
-            }
+            }   
         }
-
         return bibitems;
     }
 
@@ -46,5 +44,4 @@ public class SimpleCsvImporter extends ImportFormat {
     public String getExtensions() {
         return "csv";
     }
-
 }
